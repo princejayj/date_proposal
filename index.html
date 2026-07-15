@@ -3,74 +3,108 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Will You Go On A Date With Me?</title>
+<title>A Special Question ❤️</title>
 
 <style>
-body {
-    margin: 0;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-    font-family: Arial, sans-serif;
-    text-align: center;
-    overflow: hidden;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Segoe UI,Arial,sans-serif;
 }
 
-.card {
-    background: white;
-    padding: 40px;
-    border-radius: 25px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    max-width: 400px;
+body{
+    background:linear-gradient(135deg,#ff5f8f,#ffb6c1);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
 }
 
-h1 {
-    color: #e91e63;
+.card{
+    width:90%;
+    max-width:500px;
+    background:white;
+    border-radius:20px;
+    padding:35px;
+    text-align:center;
+    box-shadow:0 15px 40px rgba(0,0,0,.25);
+    z-index:2;
 }
 
-p {
-    font-size: 18px;
+h1{
+    color:#e91e63;
+    margin-bottom:15px;
 }
 
-button {
-    padding: 12px 25px;
-    margin: 10px;
-    border: none;
-    border-radius: 25px;
-    font-size: 18px;
-    cursor: pointer;
+p{
+    color:#555;
+    line-height:1.7;
+    margin-bottom:20px;
 }
 
-.yes {
-    background: #e91e63;
-    color: white;
+button{
+    padding:14px 28px;
+    border:none;
+    border-radius:30px;
+    cursor:pointer;
+    font-size:18px;
+    margin:8px;
+    transition:.3s;
 }
 
-.no {
-    background: #ddd;
+.yes{
+    background:#e91e63;
+    color:white;
 }
 
-#message {
-    display: none;
-    color: #e91e63;
-    font-size: 22px;
-    margin-top: 20px;
+.yes:hover{
+    transform:scale(1.08);
 }
 
-.heart {
-    position: absolute;
-    color: red;
-    animation: fall 5s linear infinite;
+.no{
+    background:#ddd;
 }
 
-@keyframes fall {
-    from {
-        transform: translateY(-100px);
+#planner{
+    display:none;
+    margin-top:25px;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    margin:8px 0;
+    border-radius:8px;
+    border:1px solid #ccc;
+}
+
+.whatsapp{
+    display:inline-block;
+    margin-top:20px;
+    background:#25D366;
+    color:white;
+    padding:14px 25px;
+    text-decoration:none;
+    border-radius:30px;
+}
+
+.heart{
+    position:absolute;
+    color:white;
+    font-size:22px;
+    animation:float 8s linear infinite;
+}
+
+@keyframes float{
+    from{
+        transform:translateY(100vh);
+        opacity:1;
     }
-    to {
-        transform: translateY(100vh);
+    to{
+        transform:translateY(-100px);
+        opacity:0;
     }
 }
 </style>
@@ -79,41 +113,99 @@ button {
 <body>
 
 <div class="card">
-    <h1>❤️ Will You Go On A Date With Me? ❤️</h1>
 
-    <p>
-        I would love to spend some special time with you.
-        Would you make me happy and say yes?
-    </p>
+<h1>Dear HER_NAME ❤️</h1>
 
-    <button class="yes" onclick="sayYes()">Yes 💕</button>
-    <button class="no" onclick="sayNo()">Maybe Later 😊</button>
+<p>
 
-    <div id="message"></div>
+Every moment with you is special.
+
+I'd love the chance to spend some quality time together.
+
+Would you do me the honor of going on a date with me?
+
+</p>
+
+<button class="yes" onclick="yes()">Yes ❤️</button>
+
+<button class="no" onclick="no()">Maybe 😊</button>
+
+<div id="planner">
+
+<h2 style="color:#e91e63;">Yay! 🎉</h2>
+
+<p>Let's plan our date.</p>
+
+<input type="date" id="date">
+
+<input type="time" id="time">
+
+<input type="text" id="place" placeholder="Meeting place">
+
+<a id="wa" class="whatsapp" href="#" target="_blank">
+Send Details on WhatsApp
+</a>
+
 </div>
 
+<div id="reply" style="margin-top:20px;font-size:20px;color:#e91e63;"></div>
+
+</div>
 
 <script>
-function sayYes() {
-    document.getElementById("message").style.display = "block";
-    document.getElementById("message").innerHTML =
-    "🎉 Yay! I can't wait! ❤️<br><br>Date: ___________<br>Time: ___________<br>Place: ___________";
-    
-    for(let i=0; i<30; i++){
-        let heart=document.createElement("div");
-        heart.className="heart";
-        heart.innerHTML="❤️";
-        heart.style.left=Math.random()*100+"vw";
-        heart.style.animationDuration=(2+Math.random()*3)+"s";
-        document.body.appendChild(heart);
-    }
+
+for(let i=0;i<40;i++){
+
+let h=document.createElement("div");
+
+h.className="heart";
+
+h.innerHTML="❤";
+
+h.style.left=Math.random()*100+"vw";
+
+h.style.animationDuration=(4+Math.random()*6)+"s";
+
+h.style.fontSize=(15+Math.random()*20)+"px";
+
+document.body.appendChild(h);
+
 }
 
-function sayNo() {
-    document.getElementById("message").style.display = "block";
-    document.getElementById("message").innerHTML =
-    "No worries 😊 I will still smile today.";
+function yes(){
+
+document.getElementById("planner").style.display="block";
+
+document.getElementById("reply").innerHTML="I can't wait! ❤️";
+
 }
+
+function no(){
+
+document.getElementById("reply").innerHTML="That's okay. I'll wait 😊";
+
+}
+
+document.getElementById("planner").addEventListener("input",function(){
+
+let d=document.getElementById("date").value;
+
+let t=document.getElementById("time").value;
+
+let p=document.getElementById("place").value;
+
+let msg=`Hi YOUR_NAME! I said YES! ❤️
+
+Date: ${d}
+
+Time: ${t}
+
+Place: ${p}`;
+
+document.getElementById("wa").href="https://wa.me/YOUR_PHONE_NUMBER?text="+encodeURIComponent(msg);
+
+});
+
 </script>
 
 </body>
