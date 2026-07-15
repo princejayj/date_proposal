@@ -114,11 +114,11 @@ input{
 
 <div class="card">
 
-<h1>Dear Tasheika ❤️</h1>
+<h1>Dear HER_NAME ❤️</h1>
 
 <p>
 
-Every moment with you is special
+Every moment with you is special.
 
 I'd love the chance to spend some quality time together.
 
@@ -182,7 +182,7 @@ document.getElementById("reply").innerHTML="I can't wait! ❤️";
 
 function no(){
 
-document.getElementById("reply").innerHTML="That's okay. I'll wait 😊";
+document.getElementById("reply").innerHTML="That's okay. I'll still treasure our friendship. 😊";
 
 }
 
@@ -194,11 +194,15 @@ let t=document.getElementById("time").value;
 
 let p=document.getElementById("place").value;
 
+let msg=`Hi YOUR_NAME! I said YES! ❤️
 
+Date: ${d}
 
+Time: ${t}
 
+Place: ${p}`;
 
-
+document.getElementById("wa").href="https://wa.me/YOUR_PHONE_NUMBER?text="+encodeURIComponent(msg);
 
 });
 
