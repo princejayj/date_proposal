@@ -3,207 +3,312 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>A Special Question ❤️</title>
-
+<title>A Question For You</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Segoe UI,Arial,sans-serif;
-}
-
-body{
-    background:linear-gradient(135deg,#ff5f8f,#ffb6c1);
+  :root{
+    --midnight:#0E1330;
+    --midnight-2:#171D42;
+    --midnight-3:#20265A;
+    --gold:#D4AF6A;
+    --gold-light:#EFDBA8;
+    --blush:#E3A0A8;
+    --cream:#F6EFE4;
+    --muted:#B9BEE0;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:radial-gradient(ellipse at 50% -10%, var(--midnight-3), var(--midnight) 60%);
     min-height:100vh;
+    font-family:'Jost',sans-serif;
+    color:var(--cream);
     display:flex;
-    justify-content:center;
     align-items:center;
-    overflow:hidden;
-}
+    justify-content:center;
+    padding:32px 16px;
+    overflow-x:hidden;
+    position:relative;
+  }
 
-.card{
-    width:90%;
-    max-width:500px;
-    background:white;
-    border-radius:20px;
-    padding:35px;
-    text-align:center;
-    box-shadow:0 15px 40px rgba(0,0,0,.25);
-    z-index:2;
-}
+  .stars{position:fixed;inset:0;pointer-events:none;z-index:0;}
+  .star{position:absolute;background:var(--gold-light);border-radius:50%;opacity:0;animation:twinkle 4s ease-in-out infinite;}
+  @keyframes twinkle{0%,100%{opacity:0;}50%{opacity:.85;}}
 
-h1{
-    color:#e91e63;
-    margin-bottom:15px;
-}
+  .stage{position:relative;z-index:1;width:100%;max-width:460px;text-align:center;}
 
-p{
-    color:#555;
-    line-height:1.7;
-    margin-bottom:20px;
-}
-
-button{
-    padding:14px 28px;
-    border:none;
-    border-radius:30px;
+  /* ---------- Sealed envelope ---------- */
+  #sealed{display:flex;flex-direction:column;align-items:center;gap:28px;animation:fadeIn 1s ease;}
+  .envelope{
+    width:220px;height:150px;
+    position:relative;
     cursor:pointer;
-    font-size:18px;
-    margin:8px;
-    transition:.3s;
-}
+  }
+  .envelope-body{
+    position:absolute;inset:0;
+    background:linear-gradient(160deg, var(--midnight-3), var(--midnight-2));
+    border:1px solid rgba(212,175,106,0.35);
+    border-radius:6px;
+  }
+  .envelope-flap{
+    position:absolute;top:0;left:0;right:0;height:50%;
+    background:linear-gradient(160deg, var(--midnight-2), var(--midnight-3));
+    clip-path:polygon(0 0,100% 0,50% 100%);
+    border:1px solid rgba(212,175,106,0.35);
+    border-bottom:none;
+    transform-origin:top center;
+    transition:transform .6s ease;
+    z-index:2;
+  }
+  .seal{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    width:52px;height:52px;border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, var(--blush), #B5636E 70%);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--cream);
+    box-shadow:0 4px 14px rgba(0,0,0,0.35);
+    z-index:3;
+    transition:transform .3s ease;
+  }
+  .envelope:hover .seal{transform:translate(-50%,-50%) scale(1.06);}
+  .envelope:hover .envelope-flap{transform:rotateX(-8deg);}
+  .envelope.open .envelope-flap{transform:rotateX(-170deg);}
+  .envelope.open .seal{opacity:0;transform:translate(-50%,-50%) scale(.4);}
 
-.yes{
-    background:#e91e63;
-    color:white;
-}
+  .prompt-text{font-family:'Cormorant Garamond',serif;font-size:19px;color:var(--muted);letter-spacing:.02em;}
 
-.yes:hover{
-    transform:scale(1.08);
-}
+  /* ---------- Card content ---------- */
+  #card{display:none;flex-direction:column;align-items:center;gap:22px;}
+  #card.show{display:flex;animation:riseIn .7s ease;}
+  @keyframes riseIn{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+  @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
 
-.no{
-    background:#ddd;
-}
+  .eyebrow{font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);}
+  h1{
+    font-family:'Cormorant Garamond',serif;
+    font-weight:600;
+    font-size:clamp(32px,7vw,44px);
+    margin:6px 0 0;
+    line-height:1.15;
+    color:var(--cream);
+  }
+  h1 em{color:var(--blush);font-style:italic;}
+  .sub{font-size:15px;color:var(--muted);max-width:340px;line-height:1.7;margin-top:2px;}
 
-#planner{
-    display:none;
-    margin-top:25px;
-}
+  .choices{display:flex;gap:14px;margin-top:8px;flex-wrap:wrap;justify-content:center;}
+  button{
+    font-family:'Jost',sans-serif;
+    font-size:14px;letter-spacing:.03em;
+    padding:13px 30px;
+    border-radius:100px;
+    cursor:pointer;
+    transition:transform .2s ease, background .2s ease, border-color .2s ease;
+  }
+  button:active{transform:scale(0.97);}
+  .btn-yes{
+    background:var(--gold);
+    border:1px solid var(--gold);
+    color:var(--midnight);
+    font-weight:500;
+  }
+  .btn-yes:hover{background:var(--gold-light);border-color:var(--gold-light);}
+  .btn-no{
+    background:transparent;
+    border:1px solid rgba(246,239,228,0.3);
+    color:var(--muted);
+  }
+  .btn-no:hover{border-color:rgba(246,239,228,0.6);color:var(--cream);}
 
-input{
+  /* ---------- Yes: booking panel ---------- */
+  #booking{display:none;flex-direction:column;gap:16px;width:100%;margin-top:6px;}
+  #booking.show{display:flex;animation:riseIn .6s ease;}
+  .panel{
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(212,175,106,0.25);
+    border-radius:16px;
+    padding:24px;
+    text-align:left;
     width:100%;
-    padding:12px;
-    margin:8px 0;
+  }
+  .field{margin-bottom:14px;}
+  .field:last-child{margin-bottom:0;}
+  label{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold-light);margin-bottom:6px;}
+  input{
+    width:100%;
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(246,239,228,0.2);
     border-radius:8px;
-    border:1px solid #ccc;
-}
+    padding:11px 12px;
+    font-family:'Jost',sans-serif;
+    font-size:14px;
+    color:var(--cream);
+  }
+  input::placeholder{color:rgba(246,239,228,0.35);}
+  input:focus{outline:none;border-color:var(--gold);}
+  input[type="date"]::-webkit-calendar-picker-indicator,
+  input[type="time"]::-webkit-calendar-picker-indicator{filter:invert(0.85) sepia(1) saturate(2) hue-rotate(-10deg);cursor:pointer;}
 
-.whatsapp{
-    display:inline-block;
-    margin-top:20px;
+  .btn-send{
     background:#25D366;
-    color:white;
-    padding:14px 25px;
-    text-decoration:none;
-    border-radius:30px;
-}
+    border:1px solid #25D366;
+    color:#0b3d20;
+    font-weight:500;
+    width:100%;
+    display:flex;align-items:center;justify-content:center;gap:8px;
+    padding:14px;
+  }
+  .btn-send:hover{background:#3fe07c;border-color:#3fe07c;}
+  .btn-send svg{width:18px;height:18px;fill:#0b3d20;}
 
-.heart{
-    position:absolute;
-    color:white;
-    font-size:22px;
-    animation:float 8s linear infinite;
-}
+  .sent-note{font-size:12px;color:var(--muted);margin-top:2px;min-height:16px;}
 
-@keyframes float{
-    from{
-        transform:translateY(100vh);
-        opacity:1;
-    }
-    to{
-        transform:translateY(-100px);
-        opacity:0;
-    }
-}
+  /* ---------- No response ---------- */
+  #waiting{display:none;flex-direction:column;align-items:center;gap:10px;animation:riseIn .6s ease;}
+  #waiting.show{display:flex;}
+  #waiting p{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--cream);}
+  .heart{color:var(--blush);font-size:22px;}
+
+  .back-link{background:none;border:none;color:var(--muted);font-size:12px;text-decoration:underline;padding:4px 0;cursor:pointer;}
+  .back-link:hover{color:var(--cream);}
 </style>
 </head>
-
 <body>
 
-<div class="card">
+<div class="stars" id="stars"></div>
 
-<h1>Dear Tasheika ❤️</h1>
+<div class="stage">
 
-<p>
+  <div id="sealed">
+    <div class="envelope" id="envelope">
+      <div class="envelope-flap"></div>
+      <div class="envelope-body"></div>
+      <div class="seal">&#9825;</div>
+    </div>
+    <p class="prompt-text">You've got something &mdash; open it</p>
+  </div>
 
-Every moment with you is special.
+  <div id="card">
+    <span class="eyebrow">A small question</span>
+    <h1>Will you go<br>on a date <em>with me?</em></h1>
+    <p class="sub">No pressure at all &mdash; just something I've been wanting to ask you.</p>
+    <div class="choices">
+      <button class="btn-yes" id="btnYes">Yes, I'd love to</button>
+      <button class="btn-no" id="btnNo">Not this time</button>
+    </div>
 
-I'd love the chance to spend some quality time together.
+    <div id="booking">
+      <div class="panel">
+        <div class="field">
+          <label for="date">Date</label>
+          <input type="date" id="date">
+        </div>
+        <div class="field">
+          <label for="time">Time</label>
+          <input type="time" id="time">
+        </div>
+        <div class="field">
+          <label for="location">Location</label>
+          <input type="text" id="location" placeholder="Where should we meet?">
+        </div>
+      </div>
+      <button class="btn-send" id="btnSend">
+        <svg viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.1-1.7-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.1.2-.3.3-.4.1-.2 0-.4 0-.5s-.7-1.6-.9-2.2c-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1.1 2.8 1.2 3c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.1-1.4-.1-.1-.3-.2-.6-.3z"/><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.7 1.5 5.3L2 22l4.8-1.5c1.5.8 3.3 1.3 5.2 1.3 5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18.2c-1.7 0-3.3-.5-4.7-1.3l-.3-.2-3.2 1 1-3.1-.2-.3C3.8 15 3.3 13.5 3.3 12c0-4.8 3.9-8.7 8.7-8.7s8.7 3.9 8.7 8.7-3.9 8.7-8.7 8.7z"/></svg>
+        Send details on WhatsApp
+      </button>
+      <p class="sent-note" id="sentNote"></p>
+    </div>
 
-Would you do me the honor of going on a date with me?
-
-</p>
-
-<button class="yes" onclick="yes()">Yes ❤️</button>
-
-<button class="no" onclick="no()">No 😊</button>
-
-<div id="planner">
-
-<h2 style="color:#e91e63;">Yay! 🎉</h2>
-
-<p>Let's plan our date.</p>
-
-<input type="date" id="date">
-
-<input type="time" id="time">
-
-<input type="text" id="place" placeholder="Meeting place">
-
-
-
-</div>
-
-<div id="reply" style="margin-top:20px;font-size:20px;color:#e91e63;"></div>
+    <div id="waiting">
+      <p>Okay, I'll be waiting <span class="heart">&#9825;</span></p>
+      <button class="back-link" id="btnBack">Actually&hellip; change my mind</button>
+    </div>
+  </div>
 
 </div>
 
 <script>
+  const starsEl = document.getElementById('stars');
+  for(let i=0;i<50;i++){
+    const s = document.createElement('div');
+    s.className='star';
+    const size = Math.random()*2+1;
+    s.style.width = size+'px';
+    s.style.height = size+'px';
+    s.style.top = Math.random()*100+'%';
+    s.style.left = Math.random()*100+'%';
+    s.style.animationDelay = (Math.random()*4)+'s';
+    s.style.animationDuration = (3+Math.random()*3)+'s';
+    starsEl.appendChild(s);
+  }
 
-for(let i=0;i<40;i++){
+  const envelope = document.getElementById('envelope');
+  const sealed = document.getElementById('sealed');
+  const card = document.getElementById('card');
 
-let h=document.createElement("div");
+  envelope.addEventListener('click', () => {
+    envelope.classList.add('open');
+    setTimeout(() => {
+      sealed.style.display = 'none';
+      card.classList.add('show');
+    }, 550);
+  });
 
-h.className="heart";
+  const btnYes = document.getElementById('btnYes');
+  const btnNo = document.getElementById('btnNo');
+  const booking = document.getElementById('booking');
+  const waiting = document.getElementById('waiting');
+  const choices = document.querySelector('.choices');
+  const subText = document.querySelector('.sub');
+  const eyebrow = document.querySelector('.eyebrow');
+  const heading = document.querySelector('h1');
 
-h.innerHTML="❤";
+  btnYes.addEventListener('click', () => {
+    choices.style.display = 'none';
+    subText.style.display = 'none';
+    booking.classList.add('show');
+  });
 
-h.style.left=Math.random()*100+"vw";
+  btnNo.addEventListener('click', () => {
+    choices.style.display = 'none';
+    subText.style.display = 'none';
+    eyebrow.style.display = 'none';
+    heading.style.display = 'none';
+    waiting.classList.add('show');
+  });
 
-h.style.animationDuration=(4+Math.random()*6)+"s";
+  document.getElementById('btnBack').addEventListener('click', () => {
+    waiting.classList.remove('show');
+    eyebrow.style.display = '';
+    heading.style.display = '';
+    subText.style.display = '';
+    choices.style.display = '';
+  });
 
-h.style.fontSize=(15+Math.random()*20)+"px";
+  document.getElementById('btnSend').addEventListener('click', () => {
+    const date = document.getElementById('date').value;
+    const time = document.getElementById('time').value;
+    const location = document.getElementById('location').value;
+    const sentNote = document.getElementById('sentNote');
 
-document.body.appendChild(h);
+    if(!date || !time || !location){
+      sentNote.textContent = 'Fill in the date, time and location first.';
+      sentNote.style.color = '#E3A0A8';
+      return;
+    }
 
-}
+    const prettyDate = new Date(date + 'T' + time).toLocaleString(undefined, {
+      weekday:'long', year:'numeric', month:'long', day:'numeric', hour:'numeric', minute:'2-digit'
+    });
 
-function yes(){
+    const message = `Yes! I'd love to go on a date with you 💛\n\nHere's what I'm proposing:\nDate & time: ${prettyDate}\nLocation: ${location}\n\nCan't wait!`;
+    const url = 'https://wa.me/?text=' + encodeURIComponent(message);
+    window.open(url, '_blank');
 
-document.getElementById("planner").style.display="block";
-
-document.getElementById("reply").innerHTML="I can't wait! ❤️";
-
-}
-
-function no(){
-
-document.getElementById("reply").innerHTML="That's okay, I'll wait once you are available. 😊";
-
-}
-
-document.getElementById("planner").addEventListener("input",function(){
-
-let d=document.getElementById("date").value;
-
-let t=document.getElementById("time").value;
-
-let p=document.getElementById("place").value;
-
-let msg=`Hi YOUR_NAME! I said YES! ❤️
-
-Date: ${d}
-
-Time: ${t}
-
-Place: ${p}`;
-
-document.getElementById("wa").href="https://wa.me/YOUR_PHONE_NUMBER?text="+encodeURIComponent(msg);
-
-});
-
+    sentNote.textContent = 'Opening WhatsApp…';
+    sentNote.style.color = '#B9BEE0';
+  });
 </script>
 
 </body>
